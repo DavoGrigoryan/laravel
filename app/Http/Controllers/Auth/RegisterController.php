@@ -9,6 +9,7 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -54,6 +55,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'image'=> ['sometimes','image','mimes:jpg,png,jpeg,svg','max:5000'],
         ]);
     }
 
@@ -65,13 +67,24 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-        $role_id= Role::select('id')->where('name','user')->first();
-        $user->roles()->attach($role_id);
-        return $user;
+        if(request()->has('image')){
+            $imageUploaded=request()->file('image');
+            $imageName=time().'.'.$imageUploaded->getClientOriginalExtension();
+            $imagePath=public_path('/images/');
+            $imageUploaded->move($imagePath,$imageName);
+            $user = User::create([
+                'name'     => $data['name'],
+                'email'    => $data['email'],
+                'password' => Hash::make($data['password']),
+                'image'    => $imageName,
+            ]);
+
+            $role_id= Role::select('id')->where('name','user')->first();
+            $user->roles()->attach($role_id);
+            return $user;
+        }
+
+
+
     }
 }

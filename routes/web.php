@@ -17,8 +17,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/admin-page', 'HomeController@admin')->middleware(['auth','accessAdmin']);
+Route::get('/user-page', 'HomeController@user')->middleware(['auth']);
 
-Route::get('/admin',function (){
-   return 'Admin';
-})->middleware(['auth','accessAdmin']);
+Route::get('/add-post','PostController@index')->middleware(['auth'])->name('addPost');
+Route::post('/store-post','PostController@store')->middleware(['auth'])->name('store');
+Route::get('/edit-post/{post_id}','PostController@edit')->middleware(['auth'])->name('edit');
+Route::post('/update-post/{post_id}','PostController@update')->middleware(['auth'])->name('update');
+Route::get('/delete-post/{post_id}','PostController@destroy')->middleware(['auth'])->name('destroy');

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\User;
+use App\Post;
+use Auth;
 class HomeController extends Controller
 {
     /**
@@ -21,8 +23,15 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function admin()
     {
-        return view('home');
+
+        return view('admin.index');
+    }
+    public function user()
+    {
+        $userId=Auth::user()->id;
+        $posts=Post::select()->where('userId',$userId)->get();
+        return view('home',compact('posts'));
     }
 }
