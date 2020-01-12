@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\Post;
+use App\Task;
+use App\AttachedTask;
 use Auth;
 class HomeController extends Controller
 {
@@ -31,7 +32,9 @@ class HomeController extends Controller
     public function user()
     {
         $userId=Auth::user()->id;
-        $posts=Post::select()->where('userId',$userId)->get();
-        return view('home',compact('posts'));
+        $tasks=Task::select()->where('userId',$userId)->get();
+
+        $attachedtasks=AttachedTask::select()->where('to_userId',$userId)->get();
+        return view('home',compact('tasks','attachedtasks'));
     }
 }

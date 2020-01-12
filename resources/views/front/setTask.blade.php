@@ -4,17 +4,35 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Update Post</div>
+                    <div class="card-header">Set Tasks</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('update',$task->id) }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('storeTask') }}" enctype="multipart/form-data">
                             @csrf
+                            <div class="form-group row">
+                                <label for="to" class="col-md-4 col-form-label text-md-right">To</label>
+
+                                <div class="col-md-6">
+                                    <select name="to">
+                                            <option>Select Name</option>
+                                        @foreach($users as $user)
+                                            <option value="{{$user->id}}">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('title')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
 
                             <div class="form-group row">
                                 <label for="title" class="col-md-4 col-form-label text-md-right">Title</label>
 
                                 <div class="col-md-6">
-                                    <input id="desc" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{$task->title }}" required autocomplete="title" autofocus>
+                                    <input id="desc" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="" required autocomplete="title" autofocus>
 
                                     @error('title')
                                     <span class="invalid-feedback" role="alert">
@@ -28,7 +46,7 @@
                                 <label for="text" class="col-md-4 col-form-label text-md-right">Text</label>
 
                                 <div class="col-md-6">
-                                    <textarea id="text"  class="form-control @error('text') is-invalid @enderror" name="text" required autocomplete="text">{{ $task->text }}</textarea>
+                                    <textarea id="text"  class="form-control @error('text') is-invalid @enderror" name="text" required autocomplete="text"></textarea>
 
                                     @error('text')
                                     <span class="invalid-feedback" role="alert">
@@ -53,7 +71,7 @@
                             </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">Update</button>
+                                    <button type="submit" class="btn btn-primary">Add</button>
                                 </div>
                             </div>
                         </form>
@@ -63,4 +81,5 @@
         </div>
     </div>
 @endsection
+
 

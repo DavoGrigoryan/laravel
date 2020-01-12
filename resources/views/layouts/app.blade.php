@@ -18,6 +18,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+
 </head>
 <body>
     <div id="app">
@@ -35,10 +37,10 @@
                             <a class="navbar-brand" href="{{ url('/') }}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="navbar-brand" href="">My Posts</a>
+                            <a class="navbar-brand" href="{{route('setTask')}}">Set Tasks</a>
                         </li>
                         <li class="nav-item">
-                            <a class="navbar-brand" href="{{route('addPost')}}">Add Post</a>
+                            <a class="navbar-brand" href="{{route('addTask')}}">Add Task</a>
                         </li>
                     </ul>
                     @endif
@@ -83,5 +85,6 @@
             @yield('content')
         </main>
     </div>
+
 </body>
 </html>
