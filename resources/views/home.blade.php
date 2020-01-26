@@ -41,8 +41,8 @@
                         <div class="card-body">
                             <h5 class="card-title">{{$task->title}}</h5>
                             <p class="card-text">{{ $task->text }}</p>
-                            <a href="{{route('edit',$task->id)}}" class="btn btn-primary">Edit</a>
-                            <a href="{{route('destroy',$task->id)}}" class="btn btn-danger">Delete</a>
+                            <a href="{{route('edit',$task->id)}}" class="btn btn-primary">Edit.</a>
+                            <a href="{{route('destroy',$task->id)}}" class="btn btn-danger">Delete!</a>
                         </div>
                     </div>
                 @empty
